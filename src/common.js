@@ -1,0 +1,1 @@
+window.STATIC_URL = "http://static.mallxx.com"
