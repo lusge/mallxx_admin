@@ -124,7 +124,7 @@
                 @change="handleRecommendStatusChange(scope.$index, scope.row)"
                 :active-value="1"
                 :inactive-value="0"
-                v-model="scope.row.recommand_status">
+                v-model="scope.row.recommend_status">
               </el-switch>
             </p>
           </template>
@@ -144,10 +144,12 @@
           <template slot-scope="scope">
             <p>{{scope.row.verify_status | verifyStatusFilter}}</p>
             <p>
-              <el-button
-                type="text"
-                @click="handleShowVerifyDetail(scope.$index, scope.row)">审核详情
-              </el-button>
+              <el-switch
+                @change="handleVerifyStatusChange(scope.$index, scope.row)"
+                :active-value="1"
+                :inactive-value="0"
+                v-model="scope.row.verify_status">
+              </el-switch>
             </p>
           </template>
         </el-table-column>
@@ -178,26 +180,6 @@
         </el-table-column>
       </el-table>
     </div>
-    <!-- <div class="batch-operate-container">
-      <el-select
-        size="small"
-        v-model="operateType" placeholder="批量操作">
-        <el-option
-          v-for="item in operates"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <el-button
-        style="margin-left: 20px"
-        class="search-button"
-        @click="handleBatchOperate()"
-        type="primary"
-        size="small">
-        确定
-      </el-button>
-    </div> -->
     <div class="pagination-container">
       <el-pagination
         background
@@ -271,23 +253,16 @@
   </div>
 </template>
 <script>
-  import {
-    fetchList,
-    updateDeleteStatus,
-    updateNewStatus,
-    updateRecommendStatus,
-    updatePublishStatus
-  } from '@/api/product'
   import {getSkuStockList, updateSkuStockList} from '@/api/sku_stock'
   import {getProductAttrList} from '@/api/product_attribute'
-  import {getProductList, changePublishStatus, changeVerifyStatus, changeNewStatus, changeRecommendStatus} from '@/api/product'
+  import {getProductList, changePublishStatus, changeVerifyStatus, changeNewStatus, changeRecommendStatus, deleteProduct} from '@/api/product'
   import {getBrandList as fetchBrandList} from '@/api/brand'
   import {getCategoryListWithChildren} from '@/api/category'
 
   const defaultListQuery = {
     name: null,
     page_num: 1,
-    page_size: 5,
+    page_size: 20,
     publish_status: null,
     verify_status: null,
     sn: null,
@@ -392,7 +367,7 @@
     },
     methods: {
       getFullPic(img) {
-        return STATIC_URL + img
+        return img
       },
       getProductSkuSp(row, index) {
         let spData = JSON.parse(row.sp_data);
@@ -488,62 +463,6 @@
       handleAddProduct() {
         this.$router.push({path:'/product/addProduct'});
       },
-      handleBatchOperate() {
-        if(this.operateType==null){
-          this.$message({
-            message: '请选择操作类型',
-            type: 'warning',
-            duration: 1000
-          });
-          return;
-        }
-        if(this.multipleSelection==null||this.multipleSelection.length<1){
-          this.$message({
-            message: '请选择要操作的商品',
-            type: 'warning',
-            duration: 1000
-          });
-          return;
-        }
-        this.$confirm('是否要进行该批量操作?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          let ids=[];
-          for(let i=0;i<this.multipleSelection.length;i++){
-            ids.push(this.multipleSelection[i].id);
-          }
-          switch (this.operateType) {
-            case this.operates[0].value:
-              this.updatePublishStatus(1,ids);
-              break;
-            case this.operates[1].value:
-              this.updatePublishStatus(0,ids);
-              break;
-            case this.operates[2].value:
-              this.updateRecommendStatus(1,ids);
-              break;
-            case this.operates[3].value:
-              this.updateRecommendStatus(0,ids);
-              break;
-            case this.operates[4].value:
-              this.updateNewStatus(1,ids);
-              break;
-            case this.operates[5].value:
-              this.updateNewStatus(0,ids);
-              break;
-            case this.operates[6].value:
-              break;
-            case this.operates[7].value:
-              this.updateDeleteStatus(1,ids);
-              break;
-            default:
-              break;
-          }
-          this.getList();
-        });
-      },
       handleSizeChange(val) {
         this.listQuery.page_num = 1;
         this.listQuery.page_size = val;
@@ -564,11 +483,6 @@
             duration: 1000
           })
         }).catch(error => {
-          this.$message({
-            message: '修改失败',
-            type: 'error',
-            duration: 1000
-          })
           if (row.publish_status === 0) {
               row.publish_status = 1;
           } else {
@@ -576,7 +490,21 @@
           }
         });
       },
-
+      handleVerifyStatusChange(index, row) {
+        changeVerifyStatus({id:row.id, status:row.verify_status}).then(response => {
+          this.$message({
+            message: '修改成功',
+            type: 'success',
+            duration: 1000
+          })
+        }).catch(error => {
+          if (row.verify_status === 0) {
+              row.verify_status = 1;
+          } else {
+              row.verify_status = 0;
+          }
+        });
+      },
       handleNewStatusChange(index, row) {
         changeNewStatus({id:row.id, status:row.new_status}).then(response => {
           this.$message({
@@ -585,11 +513,6 @@
             duration: 1000
           });
         }).catch(error => {
-          this.$message({
-            message: '修改失败',
-            type: 'error',
-            duration: 1000
-          })
           if (row.new_status === 0) {
               row.new_status = 1;
           } else {
@@ -605,11 +528,6 @@
             duration: 1000
           });
         }).catch(error => {
-          this.$message({
-            message: '修改失败',
-            type: 'error',
-            duration: 1000
-          })
           if (row.recommend_status === 0) {
               row.recommend_status = 1;
           } else {
@@ -627,9 +545,9 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let ids = [];
-          ids.push(row.id);
-          this.updateDeleteStatus(1,ids);
+          deleteProduct({id:row.id}).then(response =>{
+            this.getList();
+          });
         });
       },
       handleUpdateProduct(index,row){
@@ -644,19 +562,6 @@
       handleShowLog(index,row){
         console.log("handleShowLog",row);
       },
-      updateDeleteStatus(deleteStatus, ids) {
-        let params = new URLSearchParams();
-        params.append('ids', ids);
-        params.append('deleteStatus', deleteStatus);
-        updateDeleteStatus(params).then(response => {
-          this.$message({
-            message: '删除成功',
-            type: 'success',
-            duration: 1000
-          });
-        });
-        this.getList();
-      }
     }
   }
 </script>

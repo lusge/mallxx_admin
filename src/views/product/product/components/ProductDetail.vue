@@ -53,7 +53,7 @@
       delete_status:0,
       publish_status:0,
       new_status:0,
-      recommand_status:0,
+      recommend_status:0,
       verify_status:0,
       sort:0,
       sale:0,

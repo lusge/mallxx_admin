@@ -183,6 +183,48 @@ export const asyncRoutes = [
     ]
   },
 
+
+  {
+    path: "/marketing",
+    component: Layout,
+    redirect:"/marketing",
+    meta:{
+      title: "营销管理",
+      icon: 'el-icon-goods'
+    },
+    children:[
+      {
+        path: '/advertisement',
+        component: () => import('@/views/marketing/advertisement/index'),
+        name: 'Advertisement',
+        meta: { title: '广告管理', icon: 'component', affix: true },
+        // hidden: true,
+      },
+      {
+        path: '/advertisement/add',
+        component: () => import('@/views/marketing/advertisement/add'),
+        name: 'addAd',
+        meta: { title: '添加广告', icon: 'component', affix: true },
+        hidden: true,
+      },
+      {
+        path: '/advertisement/update',
+        component: () => import('@/views/marketing/advertisement/update'),
+        name: 'addAd',
+        meta: { title: '编辑广告', icon: 'component', affix: true },
+        hidden: true,
+      },
+      
+
+      {
+        path: 'aaa',
+        component: () => import('@/views/product/brand/add'),
+        name: 'Advertisement',
+        meta: { title: '广告管理', icon: 'component', affix: true },
+        // hidden: true,
+      },
+    ],
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

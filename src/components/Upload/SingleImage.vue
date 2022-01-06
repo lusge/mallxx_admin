@@ -46,7 +46,7 @@ export default {
   watch: {
     value(val) {
       if (val.length > 0) {
-        this.tempUrl = STATIC_URL + val;
+        this.tempUrl =  val;
       } else {
         this.tempUrl = ""
       }
@@ -70,7 +70,7 @@ export default {
       uploadFile(formData).then(response=>{
         if (response.code == 200) {
           this.tempUrl = response.url;
-          params.onSuccess(response.path)
+          params.onSuccess(response.url)
         }
       })
     },

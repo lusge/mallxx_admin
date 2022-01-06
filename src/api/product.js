@@ -64,3 +64,11 @@ export function changeRecommendStatus(data) {
         data
     })
 }
+
+export function deleteProduct(data) {
+    return request({
+        url:"/product/delete",
+        method: "DELETE",
+        data
+    })
+}

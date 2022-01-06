@@ -48,7 +48,7 @@ import { file } from 'jszip/lib/object';
       fileList() {
         let fileList = [];
         for(let i = 0;i < this.value.length; i++){
-          fileList.push({url:STATIC_URL + this.value[i], pic: this.value[i]});
+          fileList.push({url:this.value[i], pic: this.value[i]});
         }
         return fileList;
       }
@@ -60,7 +60,7 @@ import { file } from 'jszip/lib/object';
             formData.append("file", params.file)
             uploadFile(formData).then(response=>{
                 if (response.code == 200) {
-                    this.fileList.push({url: response.url, pic:response.path})
+                    this.fileList.push({url: response.url, pic:response.url})
                     this.emitInput(this.fileList);
                 }
             })
