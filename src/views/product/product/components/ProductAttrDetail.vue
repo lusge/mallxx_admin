@@ -22,6 +22,10 @@
                            class="littleMarginLeft"></el-checkbox>
             </el-checkbox-group>
             <div v-else>
+              <el-checkbox-group v-if="productAttr.input_list.length > 0" v-model="selectProductAttr[idx].values">
+                <el-checkbox v-for="item in getInputListArr(productAttr.input_list)" :label="item" :key="item"
+                            class="littleMarginLeft"></el-checkbox>
+              </el-checkbox-group>
               <el-checkbox-group v-model="selectProductAttr[idx].values">
                 <div v-for="(item,index) in selectProductAttr[idx].options" :key="index" style="display: inline-block"
                      class="littleMarginLeft">
@@ -49,10 +53,10 @@
           </el-table-column>
           <el-table-column
             label="销售价格"
-            width="80"
+            width="100"
             align="center">
             <template slot-scope="scope">
-              <el-input v-model.number="scope.row.price"></el-input>
+              <el-input @input="handleInputPrice" v-model="scope.row.price" oninput = "value=value.replace(/[^\d.]/g,'')"></el-input>
             </template>
           </el-table-column>
           <el-table-column
@@ -110,7 +114,7 @@
         <el-card shadow="never" class="cardBg">
           <div v-for="(item,index) in selectProductAttrPics" :key="index">
             <span>{{item.name}}:</span>
-            <single-image v-model="item.pic" style="width: 300px;display: inline-block;margin-left: 10px"></single-image>
+            <single-image v-model="item.pic" class="number-out" style="width: 300px;display: inline-block;margin-left: 10px;-moz-appearance: textfield;"></single-image>
           </div>
         </el-card>
       </el-form-item>
@@ -245,6 +249,11 @@
       }
     },
     methods: {
+
+      handleInputPrice(e) {
+          e = parseFloat(e); 
+      },
+
       handleEditCreated() {
         //根据商品属性分类id获取属性和参数
         if(this.value.product_attribute_category_id!=null){
@@ -266,6 +275,10 @@
         let param = {page_num: 1, page_size: 1000, type: type, cid:cid};
         getProductAttrList(param).then(response => {
           let list = response.data;
+          if (list == null) {
+            list = [];
+          }
+
           if (type === 0) {
             this.selectProductAttr = [];
             for (let i = 0; i < list.length; i++) {
@@ -287,6 +300,7 @@
                 values: values,
                 options: options
               });
+              console.log(this.selectProductAttr, "optional");
             }
             if(this.isEdit){
               //编辑模式下刷新商品属性图片
@@ -294,6 +308,7 @@
             }
           } else {
             this.selectProductParam = [];
+            
             for (let i = 0; i < list.length; i++) {
               let value=null;
               if(this.isEdit){
@@ -642,4 +657,13 @@
   .cardBg {
     background: #F8F9FC;
   }
+    
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button { 
+      -webkit-appearance: none; 
+  }
+  input[type="number"]{ 
+      -moz-appearance: textfield; 
+  }
+
 </style>

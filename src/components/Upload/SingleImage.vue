@@ -54,7 +54,7 @@ export default {
     }
   },
   created() {
-    
+    this.tempUrl = this.value;
   },
 
   computed: {

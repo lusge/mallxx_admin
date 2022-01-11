@@ -143,6 +143,9 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          for (let i = 0; i < this.productParam.sku_stock.length; i++) {
+            this.productParam.sku_stock[i].price = Number(this.productParam.sku_stock[i].price)
+          }
           if(isEdit){
             // this.productParam.id = this.$route.query.id
             updateProduct(this.productParam).then(response=>{
