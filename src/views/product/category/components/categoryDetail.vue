@@ -9,9 +9,9 @@
         <el-form-item label="上级分类:">
             <el-select v-model="category.parent_id" placeholder="请选择分类">
                 <el-option v-for="item in selectCategoryList"
-                :key="item.id"
-                :label="(item.name)"
-                :value="item.id" />
+                :key="item.value"
+                :label="item.label"
+                :value="item.value" />
             </el-select>
         </el-form-item>
 
@@ -120,13 +120,20 @@ export default {
     created() {
         this.getSelectProductCateList();
         this.getCateogryAttrAndProductAttr();
+        console.log(this.category);
     },
     methods: {
         getSelectProductCateList() {
             getCategoryList({pageSize: 1000, pageNum: 1}).then(response => {
-                this.selectCategoryList = response.data;
-                this.selectCategoryList.unshift({id:0, name:"无上级分类"});
+                // this.selectCategoryList = response.data;
+                this.selectCategoryList.unshift({value:0, label:"无上级分类"});
+                for (var i in response.data) {
+                    var item = response.data[i];
+                    this.selectCategoryList.push({value:item.id, label:item.name});
+                }
             })
+
+            
         },
 
         getCategoryInfo() {

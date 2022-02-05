@@ -132,7 +132,7 @@ export default {
             listLoading: false,
             listQuery: {
                 pageNum: 1,
-                pageSize: 10,
+                pageSize: 20,
                 pid: 0,
             },
             parentId: 0,
@@ -225,7 +225,12 @@ export default {
 
         },
         addCategory() {
-            this.$router.push("/product/addCategory")
+            if (this.$route.query.pid === "") {
+                this.$router.push("/product/addCategory")
+            } else {
+                this.$router.push({path:"/product/addCategory",query:{pid:this.$route.query.pid}})
+            }
+            
         },
     },
 

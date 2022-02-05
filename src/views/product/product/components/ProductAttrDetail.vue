@@ -545,7 +545,6 @@
         }
       },
       refreshProductAttrPics() {
-        
         this.selectProductAttrPics = [];
         if (this.selectProductAttr.length >= 1) {
           let values = this.selectProductAttr[0].values;

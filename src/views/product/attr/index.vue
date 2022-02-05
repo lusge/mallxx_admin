@@ -123,7 +123,7 @@ export default {
             dialogVisible: false,
             tableKey: 0,
             list: [],
-            total: 2,
+            total: 0,
             listLoading: false,
             listQuery: {
                 page_num: 1,

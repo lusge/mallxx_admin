@@ -17,9 +17,9 @@
             </el-form-item>
 
             <el-form-item label="分类：" prop="category_id">
-                <el-select v-model="data.pos" >
+                <el-select v-model="data.category_id" >
                     <el-option
-                        v-for="item in posOptions"
+                        v-for="item in categoryList"
                         :key="item.id"
                         :label="item.name"
                         :value="item.id"
@@ -100,6 +100,7 @@ const defaultAd = {
 }
 import SingleImage from '@/components/Upload/SingleImage';
 import { addAd, updateAd, getInfo as getAdInfo } from '@/api/advertisement'
+import {getCategoryList} from '@/api/category'
 export default {
     name:"adDetail",
     components: {SingleImage},
@@ -156,12 +157,23 @@ export default {
                     name:"url链接"
                 },
             ],
+
+            categoryList: [],
         }
     },
     created() {
         if (this.isEdit) {
             this.getInfo();
         }
+
+        var listQuery =  {
+                pageNum: 1,
+                pageSize: 200,
+                pid: 0,
+            };
+        getCategoryList(listQuery).then((response) => {
+            this.categoryList = response.data;
+        })
     },
     
     methods: {

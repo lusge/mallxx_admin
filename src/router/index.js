@@ -217,10 +217,10 @@ export const asyncRoutes = [
       
 
       {
-        path: 'aaa',
-        component: () => import('@/views/product/brand/add'),
+        path: 'recommend',
+        component: () => import('@/views/marketing/recommend/index'),
         name: 'Advertisement',
-        meta: { title: '广告管理', icon: 'component', affix: true },
+        meta: { title: '推荐管理', icon: 'component', affix: true },
         // hidden: true,
       },
     ],

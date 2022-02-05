@@ -75,7 +75,6 @@
       promotion_end_time:"",
       promotion_per_limit:0,
       promotion_type:0,
-      language:"zh-CN",
       name:"",
       sub_title:"",
       description:"",

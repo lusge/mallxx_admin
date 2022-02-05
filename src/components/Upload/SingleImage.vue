@@ -45,6 +45,11 @@ export default {
 
   watch: {
     value(val) {
+      console.log(val);
+      if (val == null) {
+        this.tempUrl = "";
+        return;
+      }
       if (val.length > 0) {
         this.tempUrl =  val;
       } else {
@@ -54,7 +59,11 @@ export default {
     }
   },
   created() {
-    this.tempUrl = this.value;
+    if (this.value == null) {
+      this.tempUrl = "";
+    } else {
+      this.tempUrl = this.value;
+    }
   },
 
   computed: {

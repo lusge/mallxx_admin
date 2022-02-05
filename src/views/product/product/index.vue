@@ -158,18 +158,9 @@
             <p>
               <el-button
                 size="mini"
-                @click="handleShowProduct(scope.$index, scope.row)">查看
-              </el-button>
-              <el-button
-                size="mini"
                 @click="handleUpdateProduct(scope.$index, scope.row)">编辑
               </el-button>
-            </p>
-            <p>
-              <el-button
-                size="mini"
-                @click="handleShowLog(scope.$index, scope.row)">日志
-              </el-button>
+            
               <el-button
                 size="mini"
                 type="danger"
@@ -195,13 +186,14 @@
     <el-dialog
       title="编辑货品信息"
       :visible.sync="editSkuInfo.dialogVisible"
-      width="60%">
+      width="60%" height="60%">
       <span>商品货号：</span>
       <span>{{editSkuInfo.product_sn}}</span>
       <el-input placeholder="按sku编号搜索" v-model="editSkuInfo.keyword" size="small" style="width: 50%;margin-left: 20px">
         <el-button slot="append" icon="el-icon-search" @click="handleSearchEditSku"></el-button>
       </el-input>
-      <el-table style="width: 100%;margin-top: 20px"
+      <el-table style="width: 100%;margin-top: 10px;"
+                max-height="500"
                 :data="editSkuInfo.stockList"
                 border>
         <el-table-column
@@ -553,14 +545,8 @@
       handleUpdateProduct(index,row){
         this.$router.push({path:'/product/updateProduct',query:{id:row.id}});
       },
-      handleShowProduct(index,row){
-        console.log("handleShowProduct",row);
-      },
       handleShowVerifyDetail(index,row){
         console.log("handleShowVerifyDetail",row);
-      },
-      handleShowLog(index,row){
-        console.log("handleShowLog",row);
       },
     }
   }
