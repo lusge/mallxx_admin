@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function editAttr(data) {
     return request({
-        url: "/product/category/attr/edit",
+        url: "/product/categoryAttribute/edit",
         method: "post",
         data
     })
@@ -10,7 +10,7 @@ export function editAttr(data) {
 
 export function getList(data) {
     return request({
-        url: "/product/category/attr/list", 
+        url: "/product/categoryAttribute/list", 
         method:"get",
         params: data
     })
@@ -18,8 +18,8 @@ export function getList(data) {
 
 export function delCategoryAttr(data) {
     return request({
-        url:"/product/category/attr/delete",
-        method: "delete",
+        url:"/product/categoryAttribute/delete",
+        method: "post",
         data
     })
 }
@@ -27,7 +27,7 @@ export function delCategoryAttr(data) {
 //查询分类下的商品属性
 export function getCategoryAttrAndProductAttr(data) {
     return request({
-        url:"/product/categoryattr/productattr",
+        url:"/product/categoryAttribute/and/product/attr",
         method:"get",
         params: data
     })

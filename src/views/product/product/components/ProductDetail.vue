@@ -24,23 +24,16 @@
       v-show="showStatus[2]"
       v-model="productParam"
       :is-edit="isEdit"
-      @nextStep="nextStep"
+      @finishCommit="finishCommit"
       @prevStep="prevStep">
     </product-attr-detail>
-    <product-relation-detail
-      v-show="showStatus[3]"
-      v-model="productParam"
-      :is-edit="isEdit"
-      @prevStep="prevStep"
-      @finishCommit="finishCommit"> 
-    </product-relation-detail>
   </el-card>
 </template>
 <script>
   import ProductInfoDetail from './ProductInfoDetail';
   import ProductSaleDetail from './ProductSaleDetail';
   import ProductAttrDetail from './ProductAttrDetail';
-  import ProductRelationDetail from './ProductRelationDetail';
+  // import ProductRelationDetail from './ProductRelationDetail';
   import {getProductInfo, createProduct, updateProduct} from '@/api/product';
 
   const defaultProductParam = {
@@ -95,7 +88,7 @@
   ;
   export default {
     name: 'ProductDetail',
-    components: {ProductInfoDetail, ProductSaleDetail, ProductAttrDetail, ProductRelationDetail},
+    components: {ProductInfoDetail, ProductSaleDetail, ProductAttrDetail},
     props: {
       isEdit: {
         type: Boolean,
@@ -106,7 +99,7 @@
       return {
         active: 0,
         productParam: Object.assign({}, defaultProductParam),
-        showStatus: [true, false, false, false]
+        showStatus: [true, false, false]
       }
     },
     created(){
@@ -145,6 +138,7 @@
           for (let i = 0; i < this.productParam.sku_stock.length; i++) {
             this.productParam.sku_stock[i].price = Number(this.productParam.sku_stock[i].price)
           }
+          this.productParam.promotion_price = parseFloat(this.productParam.promotion_price);
           if(isEdit){
             // this.productParam.id = this.$route.query.id
             updateProduct(this.productParam).then(response=>{
@@ -162,7 +156,7 @@
                 message: '提交成功',
                 duration:1000
               });
-              location.reload();
+              this.$router.push("/product/productList");
             });
           }
         })

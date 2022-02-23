@@ -99,7 +99,7 @@ const defaultAd = {
     add_time:"",
 }
 import SingleImage from '@/components/Upload/SingleImage';
-import { addAd, updateAd, getInfo as getAdInfo } from '@/api/advertisement'
+import { addAd, updateAd, getInfo as getAdInfo } from '@/api/advertise'
 import {getCategoryList} from '@/api/category'
 export default {
     name:"adDetail",

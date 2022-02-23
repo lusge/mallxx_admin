@@ -18,8 +18,8 @@ export function getBrandList(data) {
 
 export function deleteBrand(data) {
     return request({
-        url:"/product/brand/del",
-        method:"DELETE",
+        url:"/product/brand/delete",
+        method:"post",
         data
     })
 }
@@ -34,7 +34,7 @@ export function updateBrand(data) {
 
 export function changeBrandShowStatus(data) {
     return request({
-        url:"/product/brand/change/show",
+        url:"/product/brand/update/show/status",
         method:"POST",
         data
     })
@@ -42,7 +42,7 @@ export function changeBrandShowStatus(data) {
 
 export function changeBrandFactoryStatus(data) {
     return request({
-        url:"/product/brand/change/factory",
+        url:"/product/brand/update/factory/status",
         method:"POST",
         data
     })

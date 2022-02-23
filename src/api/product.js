@@ -2,7 +2,7 @@ import request from '@/utils/request';
 
 export function getProductList(data) {
     return request({
-        url:"/product/list",
+        url:"/product/product/list",
         method: "GET",
         params: data
     })
@@ -10,7 +10,7 @@ export function getProductList(data) {
 
 export function getProductInfo(data) {
     return request({
-        url:"/product/info",
+        url:"/product/product/info",
         method: "GET",
         params: data
     })
@@ -18,7 +18,7 @@ export function getProductInfo(data) {
 
 export function createProduct(data) {
     return request({
-        url:"/product/add",
+        url:"/product/product/add",
         method: "POST",
         data
     })
@@ -27,7 +27,7 @@ export function createProduct(data) {
 
 export function updateProduct(data) {
     return request({
-        url:"/product/update",
+        url:"/product/product/update",
         method: "POST",
         data
     })
@@ -35,7 +35,7 @@ export function updateProduct(data) {
 
 export function changePublishStatus(data) {
     return request({
-        url:"/product/change/publish/status",
+        url:"/product/product/change/publish-status",
         method: "POST",
         data
     })
@@ -43,7 +43,7 @@ export function changePublishStatus(data) {
 
 export function changeVerifyStatus(data) {
     return request({
-        url:"/product/change/verify/status",
+        url:"/product/product/change/verify-status",
         method: "POST",
         data
     })
@@ -51,7 +51,7 @@ export function changeVerifyStatus(data) {
 
 export function changeNewStatus(data) {
     return request({
-        url:"/product/change/new/status",
+        url:"/product/product/change/new-status",
         method: "POST",
         data
     })
@@ -59,7 +59,7 @@ export function changeNewStatus(data) {
 
 export function changeRecommendStatus(data) {
     return request({
-        url:"/product/change/recommend/status",
+        url:"/product/product/change/recommend-status",
         method: "POST",
         data
     })
@@ -67,8 +67,8 @@ export function changeRecommendStatus(data) {
 
 export function deleteProduct(data) {
     return request({
-        url:"/product/delete",
-        method: "DELETE",
+        url:"/product/product/delete",
+        method: "post",
         data
     })
 }

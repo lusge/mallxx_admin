@@ -20,7 +20,7 @@ export function addRecommend(data) {
 export function deleteRecommend(data) {
     return request({
         url:"/product/recommend/delete",
-        method:"delete",
+        method:"post",
         data
     })
 }

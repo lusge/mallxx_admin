@@ -149,7 +149,8 @@
       </el-form-item>
       <el-form-item style="text-align: center">
         <el-button size="medium" @click="handlePrev">上一步，填写商品促销</el-button>
-        <el-button type="primary" size="medium" @click="handleNext">下一步，选择商品关联</el-button>
+        <el-button type="primary" size="medium" @click="handleFinishCommit">完成，提交商品</el-button>
+        <!-- <el-button type="primary" size="medium" @click="handleNext">下一步，选择商品关联</el-button> -->
       </el-form-item>
     </el-form>
   </div>
@@ -204,6 +205,7 @@
       //商品的主图和画册图片
       selectProductPics:{
         get:function () {
+          
           let pics=[];
           if(this.value.pic === undefined || this.value.pic == null || this.value.pic === ''){
             return pics;
@@ -216,9 +218,11 @@
           for(let i = 0; i < albumPics.length; i++){
             pics.push(albumPics[i]);
           }
+          
           return pics;
         },
         set:function (newValue) {
+          
           if (newValue == null || newValue.length === 0) {
             this.value.pic = null;
             this.value.album_pics = null;
@@ -624,10 +628,15 @@
       handlePrev() {
         this.$emit('prevStep')
       },
-      handleNext() {
+      // handleNext() {
+      //   this.mergeProductAttrValue();
+      //   this.mergeProductAttrPics();
+      //   this.$emit('nextStep')
+      // },
+      handleFinishCommit(){
         this.mergeProductAttrValue();
         this.mergeProductAttrPics();
-        this.$emit('nextStep')
+        this.$emit('finishCommit',this.isEdit);
       }
     }
   }

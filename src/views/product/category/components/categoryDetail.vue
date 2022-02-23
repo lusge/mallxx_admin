@@ -100,6 +100,12 @@ export default {
         }
     },
 
+    watch:{
+        category: function() {
+            console.log(this.category.icon)
+        }
+    },
+
     data() {
         return {
             category:Object.assign({}, defaultCategory),
@@ -120,7 +126,9 @@ export default {
     created() {
         this.getSelectProductCateList();
         this.getCateogryAttrAndProductAttr();
-        console.log(this.category);
+        if (this.$route.query.pid) {
+            this.category.parent_id = Number(this.$route.query.pid);
+        }
     },
     methods: {
         getSelectProductCateList() {

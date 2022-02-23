@@ -59,7 +59,7 @@
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="排序属性：">
-                <el-input v-model="productAttr.sort"></el-input>
+                <el-input v-model.number="productAttr.sort"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit('productAttrFrom')">提交</el-button>

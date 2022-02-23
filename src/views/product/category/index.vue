@@ -86,10 +86,6 @@
                         :disabled="row.level | disableNextLevel"
                         @click="showNextLevel(row)">查看下级
                     </el-button>
-                    <el-button
-                        size="mini"
-                        @click="transferProduct(row)">转移商品
-                    </el-button>
                 </template>
             </el-table-column>
 
@@ -110,7 +106,7 @@
         </el-table>
         
         <div class="pagination-container">
-            <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
+            <pagination v-show="total>0" :total="total" :page.sync="listQuery.page_num" :limit.sync="listQuery.page_size" @pagination="getList" />
         </div>
 
     </div>
@@ -131,8 +127,8 @@ export default {
             total: 0,
             listLoading: false,
             listQuery: {
-                pageNum: 1,
-                pageSize: 20,
+                page_num: 1,
+                page_size: 20,
                 pid: 0,
             },
             parentId: 0,

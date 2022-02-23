@@ -18,7 +18,7 @@ export function getCategoryInfo(data) {
 
 export function changeCategoryNavStatus(data) {
     return request({
-        url:"/product/category/changenavstatus",
+        url:"/product/category/change/nav/status",
         method:"post",
         data
     })
@@ -26,7 +26,7 @@ export function changeCategoryNavStatus(data) {
 
 export function changeCategoryShowStatus(data) {
     return request({
-        url:"/product/category/changeshowstatus",
+        url:"/product/category/change/show/status",
         method:"post",
         data
     })
@@ -42,7 +42,7 @@ export function updateCategory(data) {
 
 export function createCategory(data) {
     return request({
-        url:"/product/category/create",
+        url:"/product/category/add",
         method: "POST",
         data
     })
@@ -50,7 +50,7 @@ export function createCategory(data) {
 
 export function deleteCategory(data) {
     return request({
-        url:"/product/category/del",
+        url:"/product/category/delete",
         method:"POST",
         data
     })

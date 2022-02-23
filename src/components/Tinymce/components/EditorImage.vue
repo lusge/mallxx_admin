@@ -32,8 +32,9 @@
 </template>
 
 <script>
-// import { getToken } from 'api/qiniu'
-import { uploadFile } from '@/api/upload'
+import * as qiniu from 'qiniu-js'
+import { getToken } from '@/api/qiniu'
+import {formatDate} from '@/utils/date'
 export default {
   name: 'EditorSlideUpload',
   props: {
@@ -44,19 +45,49 @@ export default {
   },
   data() {
     return {
+      qiniuaddr:"",
+      token: "",
       dialogVisible: false,
       listObj: {},
       fileList: []
     }
   },
+  created() {
+    getToken().then(response => {
+      this.token = response.token
+      this.qiniuaddr = response.host
+    })
+  },
   methods: {
+    getRandomInt(min, max) {
+        // 以下函数返回 min（包含）～ max（包含）之间的数字：
+       return  Math.floor(Math.random() * (max - min + 1)) + min
+    },
     uploadImage(params) {
-        console.log(this.value, 11)
-        const formData = new FormData();
-        formData.append("file", params.file)
-        uploadFile(formData).then(response=>{
-            params.onSuccess(response.url)
-        })
+      let _self = this;
+      let config = {
+        useCdnDomain: true,
+        region: qiniu.region.as0,
+        debugLogLevel: 'INFO'
+      };
+      let putExtra = {
+        fname: params.file.name,
+        params: {},
+        mimeType: null
+      };
+
+      let filetype = params.file.name.slice(params.file.name.lastIndexOf('.'),params.file.name.length)
+      let key = formatDate(new Date(),"yyyyMMddhhmmss") + this.getRandomInt(1000, 9999) + filetype
+
+      // 调用sdk上传接口获得相应的observable，控制上传和暂停
+      let observable = qiniu.upload(params.file, key, this.token, putExtra, config);
+      let subscription = observable.subscribe((response) =>{
+        
+      }, (error) => {
+        console.log(error, "error")
+      }, (complete) => {
+        params.onSuccess(_self.qiniuaddr + "/" +complete.key);
+      })
     },
     checkAllSuccess() {
       return Object.keys(this.listObj).every(item => this.listObj[item].hasSuccess)

@@ -2,7 +2,7 @@ import request from '@/utils/request';
 
 export function getAdList(data) {
     return request({
-        url:"/advertisement/list",
+        url:"/advertise/admin/list",
         method: "GET",
         params: data
     })
@@ -10,7 +10,7 @@ export function getAdList(data) {
 
 export function addAd(data) {
     return request({
-        url:"/advertisement/add",
+        url:"/advertise/add",
         method: "POST",
         data
     })
@@ -18,7 +18,7 @@ export function addAd(data) {
 
 export function updateAd(data) {
     return request({
-        url:"/advertisement/update",
+        url:"/advertise/update",
         method: "POST",
         data
     })
@@ -26,15 +26,15 @@ export function updateAd(data) {
 
 export function deteleAd(data) {
     return request({
-        url:"/advertisement/delete",
-        method: "DELETE",
+        url:"/advertise/delete",
+        method: "POST",
         data
     })
 }
 
 export function getInfo(data) {
     return request({
-        url:"/advertisement/info",
+        url:"/advertise/info",
         method: "GET",
         params: data
     })

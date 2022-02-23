@@ -13,37 +13,38 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // do something before request is sent
-
     if (store.getters.token) {
-      // let each request carry token
-      // ['X-Token'] is a custom headers key
-      // please modify it according to the actual situation
-      config.headers['authorization'] = getToken()
+      config.headers['Authorization'] = getToken()
     }
     return config
   },
   error => {
-    // do something with request error
-    console.log(error) // for debug
-    return Promise.reject(error)
+    console.log(error) 
+    return Promise.reject(error, "2222")
   }
 )
 
-// response interceptor
 service.interceptors.response.use(
-  /**
-   * If you want to get http information such as headers or status
-   * Please return  response => response
-  */
-
-  /**
-   * Determine the request status by custom code
-   * Here is just an example
-   * You can also judge the status by HTTP Status Code
-   */
   response => {
     const res = response.data
+    if (res.code == 401) {
+       Message({
+        message: "请登录",
+        type: 'error',
+        duration: 5 * 1000
+      })
+    
+      commit('SET_TOKEN', '')
+      commit('SET_ROLES', [])
+      removeToken()
+      
+      resetRouter()
+      
+      dispatch('tagsView/delAllViews', null, { root: true })
+      
+      return  Promise.reject(new Error("请登录"));
+    }
+
     if (res.detail == null) {
       return Promise.reject(new Error("未知错误"))
     }
@@ -74,9 +75,8 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
     Message({
-      message: error.detail,
+      message: error,
       type: 'error',
       duration: 5 * 1000
     })

@@ -129,11 +129,11 @@ const defaultListQuery = {
     start_time: "", 
     end_time: "", 
 }
-import {getAdList, deteleAd} from '@/api/advertisement'
+import {getAdList, deteleAd} from '@/api/advertise'
 
 import {formatDate} from '@/utils/date';
 export default {
-    name:"Advertisement",
+    name:"Advertise",
     components: {  formatDate },
     data() {
         return {

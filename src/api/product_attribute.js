@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function addProductAttr(data) {
     return request({
-        url: "/product/attr/add",
+        url: "/product/productAttribute/add",
         method: "post",
         data
     })
@@ -10,7 +10,7 @@ export function addProductAttr(data) {
 
 export function updateProductAttr(data) {
     return request({
-        url: "/product/attr/update",
+        url: "/product/productAttribute/update",
         method: "post",
         data
     })
@@ -18,7 +18,7 @@ export function updateProductAttr(data) {
 
 export function getProductAttrList(data) {
     return request({
-        url: "/product/attr/list",
+        url: "/product/productAttribute/list",
         method: "get",
         params: data
     })
@@ -26,15 +26,15 @@ export function getProductAttrList(data) {
 
 export function delteProductAttr(data) {
     return request({
-        url:"/product/attr/delete",
-        method:"delete",
+        url:"/product/productAttribute/delete",
+        method:"post",
         data
     })
 }
 
 export function getProductAttrInfo(data) {
     return request({
-        url: "/product/attr/info",
+        url: "/product/productAttribute/info",
         method: "get",
         params: data
     })
